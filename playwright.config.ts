@@ -1,13 +1,14 @@
 import { defineConfig } from '@playwright/test';
+import dotenv from 'dotenv';
+
+// Загружаем .env файл
+dotenv.config();
 
 export default defineConfig({
-  testDir: './tests',
-  timeout: 30000,
-  retries: 0,
-  use: {
-    headless: true,
-    viewport: { width: 1280, height: 720 },
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-  },
+    use: {
+        baseURL: process.env.BASE_URL, // Используем переменную из .env
+        extraHTTPHeaders: {
+            Authorization: `Bearer ${process.env.LOGIN}:${process.env.PASSWORD}`, // Пример авторизации с логином и паролем
+        },
+    },
 });

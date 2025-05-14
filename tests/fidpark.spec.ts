@@ -6,10 +6,17 @@ import { updateClient } from '../clients/updateClient';
 import { deleteClient } from '../clients/deleteClient';
 import { countClients } from '../clients/countClients';
 
+const baseURL = process.env.BASE_URL!;
+const loginCredentials = {
+    login: process.env.LOGIN!,
+    password: process.env.PASSWORD!
+};
+
+
 test('Создание, обновление и удаление клиента', async () => {
+
   const baseURL = 'https://demo1.fidpark.com';
   const authContext = await login(baseURL, 'demo', 'Demo12345');
-
   const initialCount = await countClients(baseURL, authContext);
 
   const newClientData = {
@@ -48,4 +55,33 @@ test('Создание, обновление и удаление клиента'
   expect(finalCount).toBe(initialCount);
 
   await authContext.dispose();
+});
+
+test('Негативный: создание клиента с некорректным email', async () => {
+
+    const baseURL = 'https://demo1.fidpark.com';
+    const authContext1 = await login(baseURL, 'demo', 'Demo12345');
+
+    const invalidClientData = {
+        lastNameOrCompany: 'Bad Email Inc',
+        firstName: 'Invalid',
+        persCodeOrRegNumber: '987654321',
+        email: 'not-an-email',
+        mobile: '+1234567890',
+        clientTypeCode: 1,
+        clientCode: 9999,
+        clientGroupID: 4,
+        useCommonGroupLimit: true,
+        genderIsMale: true,
+    };
+
+
+    try {
+        await createClient(baseURL, authContext1, invalidClientData);
+        throw new Error('Ожидалась ошибка, но клиент был создан');
+    } catch (error: any) {
+        expect(error.message).toContain('400');
+    }
+
+    await authContext1.dispose();
 });
