@@ -1,0 +1,14 @@
+{
+  "name": "playwright-fidpark",
+  "version": "1.0.0",
+  "description": "Тестирование Swagger-интерфейса сайта FidPark",
+  "scripts": {
+    "test": "playwright test",
+    "codegen": "playwright codegen https://demo1.fidpark.com/swagger/index.html",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "eslint": "^9.26.0"
+  }
+}
