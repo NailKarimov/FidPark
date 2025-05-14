@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
+    reporter: [['html', { open: 'never' }]],
     use: {
         baseURL: process.env.BASE_URL, // Используем переменную из .env
         extraHTTPHeaders: {

@@ -13,7 +13,7 @@ const loginCredentials = {
 };
 
 
-test('Создание, обновление и удаление клиента', async () => {
+test('Creating, updating and deleting a client', async () => {
 
   const baseURL = 'https://demo1.fidpark.com';
   const authContext = await login(baseURL, 'demo', 'Demo12345');
@@ -57,7 +57,7 @@ test('Создание, обновление и удаление клиента'
   await authContext.dispose();
 });
 
-test('Негативный: создание клиента с некорректным email', async () => {
+test('Negative: creating a client with an invalid email', async () => {
 
     const baseURL = 'https://demo1.fidpark.com';
     const authContext1 = await login(baseURL, 'demo', 'Demo12345');
